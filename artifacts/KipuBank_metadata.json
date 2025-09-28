@@ -1,0 +1,322 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_limiteBancario",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_limiteRetiro",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "KipuBank_CantCero",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_cantDeposito",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_cantDisponible",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_limiteBancario",
+						"type": "uint256"
+					}
+				],
+				"name": "KipuBank_LimiteBancarioExcedido",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_cantidad",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_limite",
+						"type": "uint256"
+					}
+				],
+				"name": "KipuBank_LimiteExcedidoRetiro",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_requerido",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_disponible",
+						"type": "uint256"
+					}
+				],
+				"name": "KipuBank_SaldoInsuficiente",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_cantidad",
+						"type": "uint256"
+					}
+				],
+				"name": "KipuBank_Deposito",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_receiver",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_cantidad",
+						"type": "uint256"
+					}
+				],
+				"name": "KipuBank_Retiro",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "depositar",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSaldo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "i_limitRetiro",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "i_limitValorDeposito",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_cantidad",
+						"type": "uint256"
+					}
+				],
+				"name": "retiro",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "s_cantDepositos",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "s_cantRetiros",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Facundo Criado",
+			"events": {
+				"KipuBank_Deposito(address,uint256)": {
+					"params": {
+						"_cantidad": "La cantidad de Saldo depositado",
+						"_sender": "La direccion que realizo el deposito"
+					}
+				},
+				"KipuBank_Retiro(address,uint256)": {
+					"params": {
+						"_cantidad": "La cantidad de saldo retirado.",
+						"_receiver": "La direccion que realizo el retiro"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"getSaldo()": {
+					"returns": {
+						"_0": "Saldo del usuario"
+					}
+				},
+				"retiro(uint256)": {
+					"params": {
+						"_cantidad": "La cantidad de saldo a retirar"
+					}
+				}
+			},
+			"title": "Contrato bancario",
+			"version": 1
+		},
+		"userdoc": {
+			"errors": {
+				"KipuBank_CantCero()": [
+					{
+						"notice": "Error cuando el monto de una transaccion es cero"
+					}
+				],
+				"KipuBank_LimiteBancarioExcedido(uint256,uint256,uint256)": [
+					{
+						"notice": "Error cuando la cantidad total depositada excede el limite permitido por el banco"
+					}
+				],
+				"KipuBank_LimiteExcedidoRetiro(uint256,uint256)": [
+					{
+						"notice": "Error cuando el monto a retirar excede el limite de retiro permitido por transaccion"
+					}
+				],
+				"KipuBank_SaldoInsuficiente(uint256,uint256)": [
+					{
+						"notice": "Error cuando un usuario intenta retirar mas fondos de los que tiene disponible"
+					}
+				]
+			},
+			"events": {
+				"KipuBank_Deposito(address,uint256)": {
+					"notice": "Evento emitido cuando un deposito se realiza con exito."
+				},
+				"KipuBank_Retiro(address,uint256)": {
+					"notice": "Evento emitido cuando un retiro se realiza con exito"
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"depositar()": {
+					"notice": "Permite a los usuarios depositar saldo en su almacenamiento personal."
+				},
+				"getSaldo()": {
+					"notice": "Obtiene el saldo actual de un usuario"
+				},
+				"i_limitRetiro()": {
+					"notice": "Limite maximo de saldo que un usuario puede retirar en una transaccion"
+				},
+				"i_limitValorDeposito()": {
+					"notice": "Limite de Saldo que el banco permite almacenar en total"
+				},
+				"retiro(uint256)": {
+					"notice": "Permite a los usuarios retirar saldo de su deposito almacenado."
+				},
+				"s_cantDepositos()": {
+					"notice": "Cantidad de depositos que se realizaron en el contrato"
+				},
+				"s_cantRetiros()": {
+					"notice": "Cantidad de retiros que se realizaron en el contrato"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/kipu-bank.sol": "KipuBank"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/kipu-bank.sol": {
+			"keccak256": "0x31759982ce017c5e27354c88afb042f9636cfd2e7e5ace790b7098f33089f127",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://567c51ff44e5f80ca756a356ce79b49811f87567f201919e5eec6efecf795c99",
+				"dweb:/ipfs/QmU2SB3x6MRrBLidtmw3oaPy5PJhhd3wivKQ1jC1o9nVRZ"
+			]
+		}
+	},
+	"version": 1
+}
