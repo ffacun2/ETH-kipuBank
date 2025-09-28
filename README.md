@@ -45,3 +45,77 @@ const kipuBank = await KipuBank.deploy(LIMIT_BANC, LIMIT_RETIRO);
 await kipuBank.waitForDeployment();
 
 console.log(`KipuBank desplegado en: ${kipuBank.target}`);
+
+```
+
+## 💻 Cómo Interactuar con el Contrato
+Una vez desplegado, los usuarios pueden interactuar con el contrato KipuBank utilizando las siguientes funciones.
+
+#### 1. Depositar Fondos (deposit) 📥
+Permite a un usuario enviar ETH al contrato, aumentando su saldo personal en la bóveda.
+
+
+| Detalle |	Valor |
+| :--- | :--- |
+| **Función** |	`depositar()` |
+| **Tipo** |	`external payable` |
+| **Requisitos** | Debe adjuntar el Ether que desea depositar a la llamada de la función (`msg.value`). |
+| **Restriccion** | Restricción	Fallará si el depósito excede el límite total del banco (`i_limitBancario`). |
+
+##### Ejemplo (Usando Ethers.js/Hardhat):
+
+```JavaScript
+
+// Asumiendo 'kipuBank' es la instancia del contrato
+// Se depositará 0.5 ETH
+await kipuBank.depositar({ value: ethers.parseEther("0.5") });
+
+```
+
+#### 2. Retirar Fondos (withdraw) 📤
+Permite al usuario retirar una cantidad específica de su saldo depositado.
+
+| Detalle | Valor |
+| :--- | :--- |
+| **Función** | `retirar(uint256 _cantidad)` |
+| **Tipo** | `external` |
+| **Parámetro** | `_cantidad` (la cantidad en Wei a retirar). |
+| **Restricciones** | 1. No puede ser cero. 2. No puede exceder el i_limitRetiro. 3. No puede exceder el saldo del usuario.|
+
+
+##### Ejemplo (Usando Ethers.js/Hardhat):
+
+```JavaScript
+
+// Se retirará 0.1 ETH
+await kipuBank.retirar(ethers.parseEther("0.1"));
+```
+
+### 3. Consultar el Saldo Propio (getBalance) 🔎
+Permite al usuario verificar cuánto ETH tiene depositado en su bóveda.
+
+|Detalle | Valor |
+| :--- | :--- |
+| **Función** | `getSaldo()` |
+| **Tipo** | `view` |
+| **Devuelve** | `uint256` (el saldo del usuario en Wei). |
+| **Costo** | Es una llamada gratuita que no cuesta gas. |
+
+##### Ejemplo (Usando Ethers.js/Hardhat):
+
+```JavaScript
+
+const salgo = await kipuBank.getSaldo();
+console.log(`Tu saldo es: ${ethers.formatEther(saldo)} ETH`);
+```
+
+### 4. Consultar Contadores y Límites (Funciones View) 📊
+Puedes consultar el estado y las reglas del banco en cualquier momento. Todas son funciones gratuitas y de solo lectura.
+
+* `i_limitbancario()`: Retorna la capacidad máxima total del banco.
+
+* `i_limitRetiro()`: Retorna el límite máximo de retiro por transacción.
+
+* `s_cantDepositos()`: Retorna el número total de depósitos realizados.
+
+* `s_cantRetiros()`: Retorna el número total de retiros realizados.
